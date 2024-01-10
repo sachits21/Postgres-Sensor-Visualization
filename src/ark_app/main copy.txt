@@ -1,0 +1,101 @@
+"""Module for the main entrypoint to the application"""
+__all__ = ["main"]
+
+from flask import Flask, render_template
+import psycopg2
+import dash
+from dash import dcc, html
+import pandas as pd
+import plotly.express as px
+from psycopg2 import pool
+import os
+
+app = Flask(__name__)
+dbhost = os.getenv("POSTGRES_HOST")
+db = os.getenv("POSTGRES_DB")
+user = os.getenv("POSTGRES_USER")
+passwd = os.getenv("POSTGRES_PASSWORD")
+global postgreSQL_pool = psycopg2.pool.SimpleConnectionPool(1, 20, user=user,
+                                                    password=passwd,
+                                                    host=dbhost,
+                                                    port="5432",
+                                                    database=db)
+def main():
+    global dash_app
+    dash_app = dash.Dash(__name__, server=app, url_base_pathname='/')
+    #server = dash_app.server
+    dash_app.config['suppress_callback_exceptions'] = True
+    dash_app.title='Ark Biotech'
+
+    # Set the layout
+    dash_app.layout = layout = html.Div('Hello from Ark Biotech')
+    dash_app.run_server(debug=True, host='0.0.0.0', port=8000)
+
+def createConnPool():
+    try:
+        # From system env
+        dbhost = os.getenv("POSTGRES_HOST")
+        db = os.getenv("POSTGRES_DB")
+        user = os.getenv("POSTGRES_USER")
+        passwd = os.getenv("POSTGRES_PWD")
+        global postgreSQL_pool
+        postgreSQL_pool = psycopg2.pool.SimpleConnectionPool(1, 20, user=user,
+                                                         password=passwd,
+                                                         host="127.0.0.1",
+                                                         port="5432",
+                                                         database=db)
+        if (postgreSQL_pool):
+            print("Connection pool created successfully")
+    except Exception as e:
+        print(e)
+    finally:
+        # closing database connection.
+        # use closeall() method to close all the active connection if you want to turn of the application
+        if postgreSQL_pool:
+            postgreSQL_pool.closeall
+        print("PostgreSQL connection pool is closed")
+
+@app.route('/graphs')
+def chart():
+    # Use getconn() to Get Connection from connection pool
+    conn = postgreSQL_pool.getconn()
+
+    cursor = conn.cursor()
+
+    # Execute a SELECT query
+    query = 'SELECT * FROM "CM_HAM_DO_AI1/Temp_value";'
+
+    cursor.execute(query)
+
+    # Fetch all rows from the result set
+    rows = cursor.fetchall()
+
+    # Separate timestamps and temperature values
+    timestamps, temperatures = zip(*rows)
+
+    # Create an interactive plot using Plotly
+    fig = px.line(x=timestamps, y=temperatures, labels={'x': 'Time', 'y': 'Temperature'},
+                      title='Time vs Temperature Plot', line_shape='linear')
+    postgreSQL_pool.putconn(conn)
+ #   return jsonpickle.encode(html.Div([dcc.Graph(figure=fig)]))
+
+    dash_app.layout = html.Div(children=[
+        html.H1(children='Ark Biotech'),
+
+        html.Div(children='''
+            Ark Biotech Graphical Dashboard.
+        '''),
+
+        dcc.Graph(
+            id='example-graph',
+            figure=fig
+        )
+    ])
+    return dash_app.server
+
+@app.route('/')
+def index():
+    return render_template('dash_index.html')
+    
+#if __name__ == '__main__':
+#    app.run(host='0.0.0.0', port=8000, debug=True)
