@@ -1,6 +1,4 @@
-# Ark Biotech - Data Systems Internship Project - Submission README
-
-This repository contains my submission for the Ark Biotech Data Systems Internship Project. Below is a summary of the key tasks outlined in the provided README:
+# Postgre Dashboard Project - README
 
 ## Project Tasks
 
