@@ -1,27 +1,19 @@
-# Postgre Dashboard Project 
+# Sensor Data Visualization
 
-## Accomplishments
+## Introduction
 
-1. **Technical Setup:**
-   - Set up the project structure, including the `src` directory with the `ark_app` package, a `Dockerfile`, `compose.yaml`, `local.env`, and `pyproject.toml`.
-
-2. **Database Access:**
-   - Implemented database access using credentials provided via environment variables in `local.env`.
-
-3. **Database Schema:**
-   - Explored the database schema, which includes tables such as `CM_HAM_DO_AI1/Temp_value`, `CM_HAM_PH_AI1/pH_value`, `CM_PID_DO/Process_DO`, and `CM_PRESSURE/Output`.
-
-4. **Web Dashboard:**
-   - Developed a web-based dashboard to visualize real-time process data.
-   - Implemented interactive plots for Temperature, pH, Dissolved Oxygen, and Pressure over time.
-
-5. **Evaluation Criteria:**
-   - Ensured successful package installation.
-   - Verified the functionality of the dashboard accessible at http://localhost:8000/.
-   - Checked compliance with MVP specifications.
-   - Ensured code quality in terms of PEP8, type annotations, configuration handling, logging, and documentation.
-
-6. **Running the Code:**
-   - Executed the code using `docker compose up`, making the dashboard accessible at http://localhost:8000/.
+The purpose of this code is to take sensor data from given data source and visualize them in a local web dashboard. 
 
 
+
+This code creates a local web page at http://localhost:8000/ and displays a dashboard containing sensor data from a PostgreSQL database. This Postgres database contains tables containing temperature, pH, dissolved oxygen, and pressure. We needed to query this data and use this data for display in a dashboard which we made using Plotly Dash. 
+
+1. **Tech Stack:**
+   - Python (provides libraries to easily query from database and interact with Plotly Dash) 
+   - HTML (to help create frontend for local web page)
+   - Plotly Dash (library to use dashboard and also creates web server at http://localhost:8000/_
+   - PostgreSQL (to query data from Postgres database, which could be any other data source)
+   - Docker (to be able to run this web dashboard on any machine quickly)
+2. **How to run this code:**
+   - Run docker compose up and on your browser go to http://localhost:8000/
+   
