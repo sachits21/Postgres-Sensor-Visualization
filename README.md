@@ -17,4 +17,5 @@ This code creates a local web page at http://localhost:8000/ and displays a dash
 3. **Challenges:**
    - A problem we ran into early on was the absence of `requirements.txt` for cleaner dependency installation in the Dockerfile. We           created a `requirements.txt` to address this
    - Another issue was having an outdated operating system for the Mac laptop so Docker would not run the container properly. To fix          this we had to update to the most recent version of the Mac Operating System
-   
+4. **Learnings:**
+   - Overall, this project provided valuable experience with Docker, dealing with errors using external resources, interacting with           PostgreSQL databases in Python, and utilizing Dash and Plotly.
