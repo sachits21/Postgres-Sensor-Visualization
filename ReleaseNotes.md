@@ -26,10 +26,7 @@ Hi! I wanted to explain the steps I took to finish this take-home project.
 8. **Project Learnings:**
    - Overall, this project provided valuable experience with Docker, dealing with errors using external resources, interacting with PostgreSQL databases in Python, and utilizing Dash and Plotly.
 
-9. **Improvements**
-   - I thoroughly enjoyed working on this project. However, due to time constraints during the Thanksgiving break, I wasn't able to implement many of the improvements I had envisioned. Specifically, I had planned to add styles and additional interactive features.
-
-10. **References:**
+9. **References:**
    - Here's a list of references I found helpful during the project:
      - [Dockerize Your Dash App](https://medium.com/@yahyasghiouri1998/dockerize-your-dash-app-f502275475fa)
      - [Full Stack Development with Docker Compose](https://medium.com/@datails/full-stack-development-with-docker-compose-c517ec826696)
